@@ -6,7 +6,6 @@ class Chip8 {
   private stack: number[] = [];
   private keypad: boolean[] = [];
   private prevpad: boolean[] = [];
-  private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
   private pc: number;
   private delayTimer: number;
@@ -18,13 +17,12 @@ class Chip8 {
   public jump: boolean;
   public storeLoad: boolean;
 
-  constructor() {
+  constructor(context: CanvasRenderingContext2D) {
     this.frameSpeed = 5;
     this.fps = 0;
     this.fps;
     this.pc = 0;
-    this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    this.context = this.canvas.getContext("2d");
+    this.context = context;
     this.display = new Array(2048);
     this.blocking = false;
     for (let i = 0; i < 2048; i++) {

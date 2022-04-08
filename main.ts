@@ -1,4 +1,5 @@
-let emu = new Chip8();
+let canvas = document.getElementById("canvas") as HTMLCanvasElement;
+let emu = new Chip8(canvas.getContext("2d"));
 let keys = Array<boolean>(16).fill(false);
 
 const mapping = {
