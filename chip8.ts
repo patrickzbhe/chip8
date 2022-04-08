@@ -57,6 +57,7 @@ class Chip8 {
   }
 
   private draw() {
+    // could refactor this to only update changed pixels, but it runs at 250 fps anyways lmfao
     for (let i = 0; i < 32; i++) {
       for (let j = 0; j < 64; j++) {
         if (this.display[i * 64 + j] == 1) {
