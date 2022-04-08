@@ -12,11 +12,16 @@ class Chip8 {
   private delayTimer: number;
   private soundTimer: number;
   private blocking: boolean;
+  private fps: number;
+  private frameSpeed;
   public shift: boolean;
   public jump: boolean;
   public storeLoad: boolean;
 
   constructor() {
+    this.frameSpeed = 5;
+    this.fps = 0;
+    this.fps;
     this.pc = 0;
     this.canvas = document.getElementById("canvas") as HTMLCanvasElement;
     this.context = this.canvas.getContext("2d");
@@ -51,13 +56,6 @@ class Chip8 {
     this.storeLoad = false;
     this.delayTimer = 0;
     this.soundTimer = 0;
-    this.soundTimer;
-    this.I;
-    this.V;
-    this.memory;
-    this.stack;
-    this.canvas;
-    this.canvas;
   }
 
   private draw() {
@@ -300,7 +298,7 @@ class Chip8 {
   private step() {
     let instr = (this.memory[this.pc] << 8) + this.memory[this.pc + 1];
     this.pc += 2;
-
+    this.fps += 1;
     document.querySelector("#pc").innerHTML = this.pc.toString();
     this.execute(instr);
   }
@@ -314,10 +312,16 @@ class Chip8 {
     }
   }
 
+  private multiStep() {
+    for (let i = 0; i < this.frameSpeed; i++) {
+      this.step();
+    }
+  }
+
   public run() {
     this.pc = 512;
 
-    setInterval(this.step.bind(this), 1);
+    setInterval(this.multiStep.bind(this), 1);
     setInterval(this.decrementDelay.bind(this), 1000 / 60);
   }
 }
